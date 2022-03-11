@@ -64,3 +64,9 @@ k exec -it cluster2-1 -- psql
 kubectl port-forward cluster1-1 5432:5432
 kubectl port-forward service/cluster1-rw 5454:5432
 ```
+
+# Use case 1
+![]("./usecase1.png")
+
+# Use case 2
+![]("./usecase1.png")
