@@ -1,0 +1,54 @@
+# Author      : Sergio Romera
+# Created     : 10/03/2022
+# Description : Cluster1 config file for streaming restore
+
+apiVersion: postgresql.k8s.enterprisedb.io/v1
+kind: Cluster
+metadata:
+  name: cluster1
+spec:
+  instances: 3
+  imageName: quay.io/enterprisedb/postgresql:14.1
+  
+  superuserSecret:
+    name: superuser-secret
+
+  bootstrap:
+     recovery:
+       backup:
+         name: backup-test
+  
+  replica:
+    enabled: true
+    source: cluster2
+
+  storage:
+    size: 1Gi
+    
+  externalClusters:
+  - name: cluster2
+    connectionParameters:
+      host: cluster2-rw
+      user: streaming_replica
+    sslKey:
+      name: cluster2-replication
+      key: tls.key
+    sslCert:
+      name: cluster2-replication
+      key: tls.crt
+    sslRootCert:
+      name: cluster2-ca
+      key: ca.crt
+    barmanObjectStore:
+        destinationPath: s3://sergiotest/cnp/dr
+        s3Credentials:
+          accessKeyId:
+            name: aws-creds
+            key: ACCESS_KEY_ID
+          secretAccessKey:
+            name: aws-creds
+            key: ACCESS_SECRET_KEY
+        wal:
+          compression: gzip
+          encryption: AES256
+          maxParallel: 8

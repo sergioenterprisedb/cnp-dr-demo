@@ -1,0 +1,44 @@
+# Author      : Sergio Romera
+# Created     : 10/03/2022
+# Description : Cluster1 config file
+
+apiVersion: postgresql.k8s.enterprisedb.io/v1
+kind: Cluster
+metadata:
+  name: cluster1
+spec:
+  instances: 3
+  imageName: quay.io/enterprisedb/postgresql:14.1
+  
+  superuserSecret:
+    name: superuser-secret
+
+  bootstrap:
+    initdb:
+      database: app
+      owner: app
+      secret:
+        name: app-secret
+
+  storage:
+    size: 1Gi
+  
+  backup:
+    barmanObjectStore:
+      destinationPath: "s3://sergiotest/cnp/dr"
+      s3Credentials:
+        accessKeyId:
+          name: aws-creds
+          key: ACCESS_KEY_ID
+        secretAccessKey:
+          name: aws-creds
+          key: ACCESS_SECRET_KEY
+      wal:
+          compression: gzip
+          encryption: AES256
+      data:
+        #compression: gzip
+        #encryption: AES256
+        immediateCheckpoint: true
+        #jobs: 2
+    retentionPolicy: "30d"

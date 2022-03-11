@@ -1,0 +1,42 @@
+# Author      : Sergio Romera
+# Created     : 10/03/2022
+# Description : Cluster2 config file to be used when cluster2 has been promoted
+#               in primary cluster. This config allow you to backup cluster2 in S3.
+
+apiVersion: postgresql.k8s.enterprisedb.io/v1
+kind: Cluster
+metadata:
+  name: cluster2
+spec:
+  instances: 3
+  imageName: quay.io/enterprisedb/postgresql:14.1
+  
+  superuserSecret:
+    name: superuser-secret
+
+  bootstrap:
+     recovery:
+       backup:
+         name: backup-test
+  
+  #replica:
+  #  enabled: true
+  #  source: cluster1
+
+  storage:
+    size: 1Gi
+    
+  backup:
+    barmanObjectStore:
+      destinationPath: s3://sergiotest/cnp/dr
+      s3Credentials:
+        accessKeyId:
+          name: aws-creds
+          key: ACCESS_KEY_ID
+        secretAccessKey:
+          name: aws-creds
+          key: ACCESS_SECRET_KEY
+      wal:
+        compression: gzip
+        encryption: AES256
+        maxParallel: 8

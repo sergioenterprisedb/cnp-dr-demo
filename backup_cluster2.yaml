@@ -1,0 +1,11 @@
+# Author      : Sergio Romera
+# Created     : 10/03/2022
+# Description : Backup file for cluster2
+
+apiVersion: postgresql.k8s.enterprisedb.io/v1
+kind: Backup
+metadata:
+  name: backup2-test
+spec:
+  cluster:
+    name: cluster2
