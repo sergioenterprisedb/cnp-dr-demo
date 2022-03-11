@@ -1,4 +1,12 @@
-# Use case 1
+# Prerequisites
+- Install a kubernetes environment (I recommend [k3d](https://k3d.io/v5.3.0/))
+- Modify install_secrets.sh file to configure AWS credentials to store backup files
+
+# Description
+This scripts will give you the availability to do a CNP (Cloud Native Postgres) demo in a kubernetes environment.
+If you have any problem, don't hesitate to contact me: sergio.romera@enterprisedb.com
+
+# Use case 1: Create cluster 1 and cluster 2 from S3 backups
 ![](./images/usecase1.png)
 
 # Test1 - DR: Create cluster2 from cluster1 from S3 backup
@@ -15,8 +23,8 @@ kubectl apply -f backup_cluster1.yaml
 kubectl -f cluster2.yaml
 ```
 
-# Use case 2
-![](./images/usecase1.png)
+# Use case 2: DR from cluster1 using wal streaming replication 
+![](./images/usecase2.png)
 
 # Test2 - DR from cluster1 using wal streaming replication
 - Create cluster1
