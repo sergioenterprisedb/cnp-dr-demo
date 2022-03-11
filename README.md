@@ -1,3 +1,6 @@
+# Use case 1
+![](./images/usecase1.png)
+
 # Test1 - DR: Create cluster2 from cluster1 from S3 backup
 - Create cluster1
 ```
@@ -11,6 +14,9 @@ kubectl apply -f backup_cluster1.yaml
 ```
 kubectl -f cluster2.yaml
 ```
+
+# Use case 2
+![](./images/usecase1.png)
 
 # Test2 - DR from cluster1 using wal streaming replication
 - Create cluster1
@@ -64,9 +70,3 @@ k exec -it cluster2-1 -- psql
 kubectl port-forward cluster1-1 5432:5432
 kubectl port-forward service/cluster1-rw 5454:5432
 ```
-
-# Use case 1
-![]("./usecase1.png")
-
-# Use case 2
-![]("./usecase1.png")
