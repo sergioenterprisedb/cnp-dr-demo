@@ -1,8 +1,9 @@
 # Prerequisites
 - Install a kubernetes environment (I recommend [k3d](https://k3d.io/v5.3.0/))
 - AWS account
+- Install [AWS CLI (Command-line interface)](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
 - AWS S3 bucket
-- Modify install_secrets.sh file to configure AWS credentials to store backup files in a bucket
+- Modify install_secrets.sh file and configure AWS credentials to store backup files in a AWS S3 bucket
 ```
 ...
 kubectl create secret generic aws-creds \
@@ -30,6 +31,10 @@ kubectl apply -f backup_cluster1.yaml
 - Create cluster2
 ```
 kubectl -f cluster2.yaml
+```
+- Activate cluster2 as Primary
+```
+kubectl -f cluster2_restore.yaml
 ```
 
 # Use case 2: DR from cluster1 using wal streaming replication 
@@ -75,13 +80,20 @@ kubectl apply -f cluster1_wal_streamin_restore.yaml
 kubectl cnp status cluster1
 ```
 
-# Commands
+# Usefull commands
 ```
+# psql
 select pg_switch_wal();
 select pg_current_wal_lsn();
 select current_user;
-k exec -it cluster1-1 -- psql
-k exec -it cluster2-1 -- psql
+
+# kubectl
+kubectl exec -it cluster1-1 -- psql
+kubectl exec -it cluster2-1 -- psql
+kubectl cnp promote cluster1 cluster1-2
+kubectl apply -f backup_cluster1.yaml
+kubectl describe backup backup-test
+kubectl logs cluster1-1
 
 # Port Forwarding
 kubectl port-forward cluster1-1 5432:5432
