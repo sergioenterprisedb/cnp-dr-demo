@@ -1,4 +1,4 @@
-# Test1 - DR from cluster1 from S3 backup
+# Test1 - DR: Create cluster2 from cluster1 from S3 backup
 - Create cluster1
 ```
 install_cnp.sh
@@ -12,7 +12,7 @@ kubectl apply -f backup_cluster1.yaml
 kubectl -f cluster2.yaml
 ```
 
-# Test2 - DR from cluster1 wal streaming replication
+# Test2 - DR from cluster1 using wal streaming replication
 - Create cluster1
 ```
 install_cnp.sh
