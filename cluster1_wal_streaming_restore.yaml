@@ -16,7 +16,7 @@ spec:
   bootstrap:
      recovery:
        backup:
-         name: backup-test
+         name: backup2-test
   
   replica:
     enabled: true

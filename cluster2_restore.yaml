@@ -20,9 +20,9 @@ spec:
   
   # Log file replication
   # /!\ Comment replica to start cluster in RW
-  replica:
-    enabled: true
-    source: cluster1
+  #replica:
+  #  enabled: true
+  #  source: cluster1
 
   storage:
     size: 1Gi
