@@ -1,6 +1,15 @@
 # Prerequisites
 - Install a kubernetes environment (I recommend [k3d](https://k3d.io/v5.3.0/))
-- Modify install_secrets.sh file to configure AWS credentials to store backup files
+- AWS account
+- AWS S3 bucket
+- Modify install_secrets.sh file to configure AWS credentials to store backup files in a bucket
+```
+...
+kubectl create secret generic aws-creds \
+  --from-literal=ACCESS_KEY_ID=<access_key_id> \
+  --from-literal=ACCESS_SECRET_KEY=<access_secret_key>
+...
+```
 
 # Description
 This scripts will give you the availability to do a CNP (Cloud Native Postgres) demo in a kubernetes environment.
