@@ -30,11 +30,11 @@ kubectl apply -f backup_cluster1.yaml
 ```
 - Create cluster2
 ```
-kubectl -f cluster2.yaml
+kubectl apply -f cluster2.yaml
 ```
 - Activate cluster2 as Primary
 ```
-kubectl -f cluster2_restore.yaml
+kubectl apply -f cluster2_restore.yaml
 ```
 
 # Use case 2: DR from cluster1 using wal streaming replication 
@@ -73,7 +73,7 @@ kubectl delete -f cluster1.yaml
 ```
 - Create cluster1 from cluster2
 ```
-kubectl apply -f cluster1_wal_streamin_restore.yaml
+kubectl apply -f cluster1_wal_streaming_restore.yaml
 ```
 - Verify that cluster1 is working well 
 ```
