@@ -51,7 +51,7 @@ kubectl apply -f backup_cluster1.yaml
 ```
 - Create cluster2
 ```
-kubectl -f cluster2_wal_streaming.yaml
+kubectl apply -f cluster2_wal_streaming.yaml
 ```
 
 # Test2 - Promote cluster2 (DR from cluster1)
