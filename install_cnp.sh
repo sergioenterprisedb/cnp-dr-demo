@@ -29,7 +29,7 @@ function check_cluster()
   status=0
   counter=1
   instances=0
-  instances=`grep instances ${cluster_file} | awk '{print $2}' | cut -c1`
+  instances=`grep instances ${cluster_file1} | awk '{print $2}' | cut -c1`
   sp="/-\|"
     
   #sleep 5
@@ -78,6 +78,28 @@ function msg()
   printf "${c_green}$1${c_r}\n"
 }
 
+function install_minio_client() 
+{
+  if [ "${OBJECT_STORAGE}" == "MINIO" ]; then
+    cat install_minio_docker_client.sh | \
+    docker run --name my-mc --hostname my-mc -e hostname=`hostname` -i --entrypoint /bin/bash --rm minio/mc
+  fi
+}
+
+function object_storage_config ()
+{
+  if [ ${OBJECT_STORAGE} == "MINIO" ]; then
+    echo "MinIO config"
+    install_minio_client
+    cp ${S3_MINIO_DIRECTORY}/*.yaml .
+  fi
+
+  if [ ${OBJECT_STORAGE} == "AWS" ]; then
+    echo "AWS S3 config"
+    cp ${S3_AWS_DIRECTORY}/*.yaml .
+  fi
+}
+
 #Install CNP
 start=$SECONDS
 
@@ -100,13 +122,18 @@ echo "***************************"
 echo "*** Install secrets AWS ***"
 echo "***************************"
 . ./install_secrets.sh
-sleep 5
+sleep 2
+
+echo "********************************"
+echo "*** Configure Object Storage ***"
+echo "********************************"
+object_storage_config
 
 echo "***********************"
 echo "*** Install cluster ***"
 echo "***********************"
-msg "kubectl apply -f ${cluster_file}"
-kubectl apply -f ${cluster_file}
+msg "kubectl apply -f ${cluster_file1}"
+kubectl apply -f ${cluster_file1}
 check_cluster
 
 echo "***************************"

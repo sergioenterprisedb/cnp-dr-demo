@@ -14,6 +14,11 @@ kubectl delete -f backup_cluster2.yaml
 kubectl delete -f app-secret.yaml
 kubectl delete -f superuser-secret.yaml
 kubectl delete secret aws-creds
+kubectl delete secret minio-creds
+
+# Docker
+docker rmi -f minio/minio
+docker rmi -f minio/mc
 
 # AWS delete
 aws s3 rm --recursive ${s3_cluster1}
