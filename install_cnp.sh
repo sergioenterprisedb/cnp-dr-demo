@@ -81,8 +81,13 @@ function msg()
 function install_minio_client() 
 {
   if [ "${OBJECT_STORAGE}" == "MINIO" ]; then
-    cat install_minio_docker_client.sh | \
-    docker run --name my-mc --hostname my-mc -e hostname=`hostname` -i --entrypoint /bin/bash --rm minio/mc
+    #cat install_minio_docker_client.sh | \
+    #docker run --name my-mc --hostname my-mc -e hostname=`hostname` -i --entrypoint /bin/bash --rm minio/mc
+    if [ `ps -edf | grep minio/minio | grep -v grep | wc -l` -eq 0 ]; then
+      printf "/!\ MINIO not started\n"
+      printf "Please, start MINIO (start_minio_docker_server.sh) and execute again\n"
+      exit
+    fi
   fi
 }
 
@@ -100,8 +105,26 @@ function object_storage_config ()
   fi
 }
 
+function replace_config()
+{
+  # MINIO
+  sed -i -e "s|###IMAGENAME###|${IMAGENAME}|g" cluster*.yaml
+  sed -i -e "s|###MINIO_DESTINATIONPATH###|${MINIO_DESTINATIONPATH}|g" cluster*.yaml
+  sed -i -e "s|###MINIO_ENDPOINTURL###|${MINIO_ENDPOINTURL}|g" cluster*.yaml
+
+  #S3
+  sed -i -e "s|###IMAGENAME###|${IMAGENAME}|g" cluster*.yaml
+  sed -i -e "s|###S3_DESTINATIONPATH###|${S3_DESTINATIONPATH}|g" cluster*.yaml
+
+}
+
 #Install CNP
 start=$SECONDS
+
+echo "********************************"
+echo "*** Configure Object Storage ***"
+echo "********************************"
+object_storage_config
 
 echo "*******************************"
 echo "*** Installing CNP Plugging ***"
@@ -124,10 +147,10 @@ echo "***************************"
 . ./install_secrets.sh
 sleep 2
 
-echo "********************************"
-echo "*** Configure Object Storage ***"
-echo "********************************"
-object_storage_config
+echo "**********************"
+echo "*** Replace config ***"
+echo "**********************"
+replace_config
 
 echo "***********************"
 echo "*** Install cluster ***"
@@ -150,4 +173,9 @@ echo "Execute this command to check the cluster status:"
 echo ""
 msg "kubectl cnp status ${cluster_name}"
 echo ""
+
+# curl -sSfL https://github.com/EnterpriseDB/kubectl-cnp/raw/main/install.sh | sh -s -- -b /usr/local/bin
+# kubectl apply -f https://get.enterprisedb.io/cnp/postgresql-operator-1.14.0.yaml
+# kubectl get deploy -n postgresql-operator-system postgresql-operator-controller-manager
+# kubectl apply -f cluster1.yaml
 

@@ -10,7 +10,7 @@ metadata:
   name: cluster2
 spec:
   instances: 3
-  imageName: quay.io/enterprisedb/postgresql:14.1
+  imageName: ###IMAGENAME###
   
   superuserSecret:
     name: superuser-secret
@@ -42,8 +42,8 @@ spec:
       name: cluster1-ca
       key: ca.crt
     barmanObjectStore:
-        destinationPath: s3://cnp/
-        endpointURL: "http://192.168.56.1:9000"
+        destinationPath: "###MINIO_DESTINATIONPATH###"
+        endpointURL: "###MINIO_ENDPOINTURL###"
         s3Credentials:
           accessKeyId:
             name: minio-creds

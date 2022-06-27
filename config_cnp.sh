@@ -4,23 +4,26 @@
 # Created     : 10/03/2022
 # Description : Config file
 
+export version=`kubectl-cnpg version | awk '{ print $2 }' | awk -F":" '{ print $2}'`
 export plugging="https://github.com/EnterpriseDB/kubectl-cnp/raw/main/install.sh"
-export operator="https://get.enterprisedb.io/cnp/postgresql-operator-1.14.0.yaml"
+export operator="https://get.enterprisedb.io/cnp/postgresql-operator-${version}.yaml"
 export cluster_file1="cluster1.yaml"
 export cluster_file2="cluster2.yaml"
 export cluster_name="cluster1"
 export S3_MINIO_DIRECTORY="./S3_MINIO"
 export S3_AWS_DIRECTORY="./S3_AWS"
-export OBJECT_STORAGE="MINIO"    # MINIO or AWS
-
+# MINIO or AWS
+export OBJECT_STORAGE="MINIO"
+export IMAGENAME="quay.io/enterprisedb/postgresql:14.1"
 # AWS S3
-export s3_cluster="s3://sergiocnp/cnp/dr"
+export S3_DESTINATIONPATH="s3://sergiocnp/cnp/dr"
 export s3_cluster1="s3://sergiocnp/cnp/dr/cluster1"
 export s3_cluster2="s3://sergiocnp/cnp/dr/cluster2"
 
 # MinIO config
-export minio_destinationpath="s3://cnp/"
-export minio_endpointURL="http://192.168.56.1:9000"
+export HOSTNAME=$(ifconfig -a|grep 192|head -n1|awk '{print $2}')
+export MINIO_DESTINATIONPATH="s3://cnp/"
+export MINIO_ENDPOINTURL="http://${HOSTNAME}:9000"
 
 # **************
 # *** Colors ***

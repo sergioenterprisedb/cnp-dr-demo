@@ -17,8 +17,12 @@ kubectl delete secret aws-creds
 kubectl delete secret minio-creds
 
 # Docker
+# Remove minio bucket
+#cat remove_minio_bucket.sh | \
+#docker run --name my-mc --hostname my-mc -e hostname=`hostname` -i --entrypoint /bin/bash --rm minio/mc
+
 docker rmi -f minio/minio
-docker rmi -f minio/mc
+#docker rmi -f minio/mc
 
 # AWS delete
 aws s3 rm --recursive ${s3_cluster1}

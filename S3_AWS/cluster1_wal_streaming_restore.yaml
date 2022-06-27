@@ -8,7 +8,7 @@ metadata:
   name: cluster1
 spec:
   instances: 3
-  imageName: quay.io/enterprisedb/postgresql:14.1
+  imageName: ###IMAGENAME###
   
   superuserSecret:
     name: superuser-secret
@@ -40,7 +40,7 @@ spec:
       name: cluster2-ca
       key: ca.crt
     barmanObjectStore:
-        destinationPath: s3://sergiocnp/cnp/dr
+        destinationPath: "###S3_DESTINATIONPATH###"
         s3Credentials:
           accessKeyId:
             name: aws-creds
@@ -48,6 +48,9 @@ spec:
           secretAccessKey:
             name: aws-creds
             key: ACCESS_SECRET_KEY
+          sessionToken:
+            name: aws-creds
+            key: ACCESS_SESSION_TOKEN
         wal:
           compression: gzip
           encryption: AES256

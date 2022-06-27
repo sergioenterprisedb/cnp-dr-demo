@@ -14,4 +14,3 @@ kubectl apply -f superuser-secret.yaml
 kubectl create secret generic minio-creds \
   --from-literal=MINIO_ACCESS_KEY=admin \
   --from-literal=MINIO_SECRET_KEY=password
-
