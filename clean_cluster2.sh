@@ -11,5 +11,9 @@ kubectl delete -f cluster2.yaml
 kubectl delete -f backup_cluster2.yaml
 
 # AWS delete
-aws s3 rm --recursive ${s3_cluster2}
-
+if [ "${OBJECT_STORAGE}" == "AWS" ]; then
+  aws s3 rm --recursive ${s3_cluster2}
+else
+  # Stop MinIO
+  docker ps | grep minio | awk '{print $1}' | xargs -I % docker stop %
+fi
