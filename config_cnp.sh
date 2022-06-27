@@ -23,7 +23,8 @@ export s3_cluster2="s3://sergiocnp/cnp/dr/cluster2"
 # MinIO config
 export HOSTNAME=$(ifconfig -a|grep 192|head -n1|awk '{print $2}')
 export MINIO_DESTINATIONPATH="s3://cnp/"
-export MINIO_ENDPOINTURL="http://${HOSTNAME}:9000"
+export MINIO_PORT=9000
+export MINIO_ENDPOINTURL="http://${HOSTNAME}:${MINIO_PORT}"
 
 # **************
 # *** Colors ***

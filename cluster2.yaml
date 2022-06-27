@@ -30,8 +30,8 @@ spec:
   externalClusters:
     - name: cluster1
       barmanObjectStore:
-        destinationPath: s3://cnp/
-        endpointURL: "http://192.168.56.1:9000"
+        destinationPath: "s3://cnp/"
+        endpointURL: "http://192.168.1.16:9000"
         s3Credentials:
           accessKeyId:
             name: minio-creds

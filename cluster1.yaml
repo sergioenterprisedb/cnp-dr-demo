@@ -22,7 +22,10 @@ spec:
 
   storage:
     size: 1Gi
-  
+
+  monitoring:
+   enablePodMonitor: true
+ 
   backup:
     barmanObjectStore:
       destinationPath: "s3://cnp/"
