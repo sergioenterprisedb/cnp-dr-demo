@@ -94,8 +94,8 @@ function install_minio_client()
 function object_storage_config ()
 {
   if [ ${OBJECT_STORAGE} == "MINIO" ]; then
-    echo "MinIO config"
     install_minio_client
+    printf "MinIO started\n"
     cp ${S3_MINIO_DIRECTORY}/*.yaml .
   fi
 
@@ -108,13 +108,13 @@ function object_storage_config ()
 function replace_config()
 {
   # MINIO
-  sed -i -e "s|###IMAGENAME###|${IMAGENAME}|g" cluster*.yaml
-  sed -i -e "s|###MINIO_DESTINATIONPATH###|${MINIO_DESTINATIONPATH}|g" cluster*.yaml
-  sed -i -e "s|###MINIO_ENDPOINTURL###|${MINIO_ENDPOINTURL}|g" cluster*.yaml
+  sed -i '' -e "s|###IMAGENAME###|${IMAGENAME}|g" cluster*.yaml
+  sed -i '' -e "s|###MINIO_DESTINATIONPATH###|${MINIO_DESTINATIONPATH}|g" cluster*.yaml
+  sed -i '' -e "s|###MINIO_ENDPOINTURL###|${MINIO_ENDPOINTURL}|g" cluster*.yaml
 
   #S3
-  sed -i -e "s|###IMAGENAME###|${IMAGENAME}|g" cluster*.yaml
-  sed -i -e "s|###S3_DESTINATIONPATH###|${S3_DESTINATIONPATH}|g" cluster*.yaml
+  sed -i '' -e "s|###IMAGENAME###|${IMAGENAME}|g" cluster*.yaml
+  sed -i '' -e "s|###S3_DESTINATIONPATH###|${S3_DESTINATIONPATH}|g" cluster*.yaml
 
 }
 
