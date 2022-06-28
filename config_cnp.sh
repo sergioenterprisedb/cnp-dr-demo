@@ -4,7 +4,7 @@
 # Created     : 10/03/2022
 # Description : Config file
 
-export version=`kubectl-cnpg version | awk '{ print $2 }' | awk -F":" '{ print $2}'`
+export version=`kubectl cnp version | awk '{ print $2 }' | awk -F":" '{ print $2}'`
 export plugging="https://github.com/EnterpriseDB/kubectl-cnp/raw/main/install.sh"
 export operator="https://get.enterprisedb.io/cnp/postgresql-operator-${version}.yaml"
 export cluster_file1="cluster1.yaml"
