@@ -20,7 +20,7 @@ function check_deployment()
 
   printf "\b"
   msg "kubectl get deploy -n postgresql-operator-system postgresql-operator-controller-manager"
-  kubectl get deploy -n postgresql-operator-system postgresql-operator-controller-manager
+  kubectl get deploy -n postgresql-operator-system postgresql-operator-controller-manager -o wide
 
 }
 

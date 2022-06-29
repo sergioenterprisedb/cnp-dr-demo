@@ -27,7 +27,7 @@ if [ "${OBJECT_STORAGE}" == "MINIO" ]; then
   #docker rmi -f minio/mc
 
   # Stop MinIO
-  docker ps | grep minio | awk '{print $1}' | xargs -I % docker stop %
+  ps | grep "start_minio" | grep -v grep | awk '{print $1}' | xargs -I % kill %
 fi
 
 # AWS delete
