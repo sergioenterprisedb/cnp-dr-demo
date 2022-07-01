@@ -13,8 +13,12 @@ if [ "${OBJECT_STORAGE}" == "AWS" ]; then
     --from-literal=ACCESS_SESSION_TOKEN="<token>"
 fi
 
-kubectl apply -f app-secret.yaml
-kubectl apply -f superuser-secret.yaml
+#kubectl apply -f app-secret.yaml
+kubectl create secret generic app-secret --from-literal=username=app --from-literal=password=app
+
+#kubectl apply -f superuser-secret.yaml
+kubectl create secret generic superuser-secret --from-literal=username=postgres --from-literal=password=admin
+
 kubectl create secret generic minio-creds \
   --from-literal=MINIO_ACCESS_KEY=admin \
   --from-literal=MINIO_SECRET_KEY=password
