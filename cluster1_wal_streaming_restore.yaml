@@ -18,9 +18,9 @@ spec:
        backup:
          name: backup2-test
   
-  #replica:
-  #  enabled: true
-  #  source: cluster2
+  replica:
+    enabled: true
+    source: cluster2
 
   storage:
     size: 1Gi
