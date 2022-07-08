@@ -115,6 +115,10 @@ kubectl cnp status cluster1
 
 # Usefull commands
 ```
+# CNP
+./show_cluster1.sh
+./show_cluster2.sh
+
 # psql
 select pg_switch_wal();
 select pg_current_wal_lsn();
