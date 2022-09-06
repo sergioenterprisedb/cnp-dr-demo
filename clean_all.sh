@@ -16,6 +16,10 @@ kubectl delete -f superuser-secret.yaml
 kubectl delete secret aws-creds
 kubectl delete secret minio-creds
 
+#Delete operator
+export version=`kubectl cnp version | awk '{ print $2 }' | awk -F":" '{ print $2}'`
+export operator="https://get.enterprisedb.io/cnp/postgresql-operator-${version}.yaml"
+kubectl delete -f ${operator}
 
 if [ "${OBJECT_STORAGE}" == "MINIO" ]; then
  # Docker
